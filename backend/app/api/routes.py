@@ -7,19 +7,10 @@ import pandas as pd
 
 
 router = APIRouter()
-
-@router.get("/predictions/today", response_model=DailyPrediction)
-def get_today_prediction():
-    return get_prediction_by_date(date.today())
-
-@router.get("/predictions/week", response_model=List[DailyPrediction])
-def get_this_week_prediction():
-    return get_latest_week()
-
-@router.get("/predictions/history", response_model=List[DailyPrediction])
-def get_historical_predictions(start: date = Query(...), end: date = Query(...)):
-    return get_predictions_range(start, end)
-
+@router.get("/predictions/all", response_model=List[DailyPrediction])
+def get_all_predictions():
+    from app.services.prediction_loader import get_all_predictions
+    return get_all_predictions()
 
 @router.post("/submit/data", response_model=List[DailyPrediction])
 async def submit_raw_data(file: UploadFile = File(...)):
@@ -38,3 +29,22 @@ async def submit_raw_data(file: UploadFile = File(...)):
         ))
 
     return predictions
+
+
+
+#=======================================================
+# API calls to get backend-processed data
+
+# @router.get("/predictions/today", response_model=DailyPrediction)
+# def get_today_prediction():
+#     return get_prediction_by_date(date.today())
+
+# @router.get("/predictions/week", response_model=List[DailyPrediction])
+# def get_this_week_prediction():
+#     return get_latest_week()
+
+# @router.get("/predictions/history", response_model=List[DailyPrediction])
+# def get_historical_predictions(start: date = Query(...), end: date = Query(...)):
+#     return get_predictions_range(start, end)
+
+

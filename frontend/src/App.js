@@ -1,24 +1,33 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import SubmitPage from "./pages/submitPage";
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
+          <Link to="/" style={{ marginRight: "1rem" }}>Home</Link>
+          <Link to="/submit">Submit Raw Data</Link>
+          
+        </nav>
+
+        <Routes>
+          <Route path="/submit" element={<SubmitPage />} />
+          <Route
+            path="/"
+            element={
+              <header className="App-header">
+                <img src="/logo192.png" className="App-logo" alt="logo" />
+                <p>Welcome to the HAB Prediction App</p>
+                <p>Use the navigation above to upload data.</p>
+              </header>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

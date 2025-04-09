@@ -30,3 +30,19 @@ def get_latest_week():
     today = date.today()
     # Assuming predictions are always available for a rolling 7-day week
     return get_predictions_range(today, today + timedelta(days=6))
+
+def get_all_predictions():
+    predictions = []
+
+    for filename in os.listdir(DATA_DIR):
+        if filename.endswith(".json"):
+            file_path = os.path.join(DATA_DIR, filename)
+            try:
+                prediction = load_prediction_file(file_path)
+                predictions.append(prediction)
+            except Exception as e:
+                print(f"Skipping {filename} due to error: {e}")
+
+    # Optional: sort by date
+    # predictions.sort(key=lambda p: p.date)
+    return predictions
