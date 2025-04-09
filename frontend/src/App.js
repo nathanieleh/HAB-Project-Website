@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import SubmitPage from "./pages/submitPage";
 import './App.css';
-import OceanWaves from "./OceanWaves";
+import OceanWaves from "./components/OceanWaves";
 
 
 function App() {
@@ -10,10 +10,9 @@ function App() {
     <Router>
       <OceanWaves />;
       <div className="App">
-        <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
+        <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc", backgroundColor: "white" }}>
           <Link to="/" style={{ marginRight: "1rem" }}>Home</Link>
           <Link to="/submit">Submit Raw Data</Link>
-          
         </nav>
 
         <Routes>
