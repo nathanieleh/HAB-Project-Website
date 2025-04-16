@@ -1,4 +1,13 @@
-import axiosClient from "./axiosClient";
+import axios from "axios";
+
+const baseURL = process.env.REACT_APP_API_URL || "http://localhost:8000/api";
+
+const axiosClient = axios.create({
+  baseURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 
 //=======================================================
@@ -20,33 +29,3 @@ export const submitRawData = async (csvFile) => {
 
   return res.data;
 };
-
-
-
-
-
-
-//=======================================================
-// // API calls to get backend-processed data 
-// // currently unused, we are sacrilegiously storing data on frontend 
-
-
-// // GET /api/predictions/today
-// export const getTodayPrediction = async () => {
-//   const res = await axiosClient.get("/predictions/today");
-//   return res.data;
-// };
-
-// // GET /api/predictions/week
-// export const getWeeklyPredictions = async () => {
-//   const res = await axiosClient.get("/predictions/week");
-//   return res.data;
-// };
-
-// // GET /api/predictions/history?start={startDate}&end={endDate}
-// export const getHistoricalPredictions = async (startDate, endDate) => {
-//   const res = await axiosClient.get("/predictions/history", {
-//     params: { start: startDate, end: endDate },
-//   });
-//   return res.data;
-// };
