@@ -42,3 +42,7 @@ yarn-error.log*
 *.swp
 *.swo
 *.bak
+
+__pycache__/
+.env/
+data/*
