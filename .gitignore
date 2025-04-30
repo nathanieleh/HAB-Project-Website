@@ -13,40 +13,41 @@ serviceAccountKey.json
 
 # frontend
 # dependencies
-/hab-frontend/node_modules
-/hab-frontend/.pnp
-/hab-frontend/.pnp.*
-/hab-frontend/.yarn/*
-!/hab/.yarn/patches
-!/hab/.yarn/plugins
-!/hab/.yarn/releases
-!/hab/.yarn/versions
+/fontend/node_modules
+/fontend/.pnp
+/fontend/.pnp.*
+/fontend/.yarn/*
+!/fontend/.yarn/patches
+!/fontend/.yarn/plugins
+!/fontend/.yarn/releases
+!/fontend/.yarn/versions
 
 # testing
-/hab/coverage/
+/fontend/coverage
 
 # next.js
-/hab/.next/
-/hab/out/
+/fontend/.next/
+/fontend/out/
 
 # production
-/hab/build/
+/fontend/build
 
 # misc
-/hab/.DS_Store
-/hab/*.pem
+/fontend/.DS_Store
+/fontend/*.pem
 
-# debug logs
-/hab/npm-debug.log*
-/hab/yarn-debug.log*
-/hab/yarn-error.log*
-/hab/.pnpm-debug.log*
+# debug
+/fontend/npm-debug.log*
+/fontend/yarn-debug.log*
+/fontend/yarn-error.log*
+/fontend/.pnpm-debug.log*
 
-# env files
-/hab/.env*
+# env files (can opt-in for committing if needed)
+/fontend/.env*
 
 # vercel
-/hab/.vercel/
+/fontend/.vercel
 
-/hab/*.tsbuildinfo
-/hab/next-env.d.ts
+# typescript
+/fontend/*.tsbuildinfo
+/fontend/next-env.d.ts
