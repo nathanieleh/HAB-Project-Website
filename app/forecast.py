@@ -185,7 +185,7 @@ def main():
     print("YAML Contents:")
     for key, value in config.items():
         print(f"{key}: {value}")
-    data = clean_data(config['data_path'])
+    data = clean_data(config['file_name'])
     parameters = process_parameters(config['parameters_path'])
     forecast, num_models = next_forecast(data,parameters,config['target'],n=config['n'],p=config['p'])
     #output to JSON
