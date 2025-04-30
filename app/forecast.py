@@ -18,7 +18,7 @@ import os
 from copy import deepcopy
 import math
 import random
-from sklearn.metrics import root_mean_squared_error
+from sklearn.metrics import mean_squared_error
 from scipy.stats import ttest_ind
 import pickle
 import ast
@@ -203,7 +203,7 @@ def main():
     print("YAML Contents:")
     for key, value in config.items():
         print(f"{key}: {value}")
-    data = clean_data(config['data_path'])
+    data = clean_data(config['file_name'])
     parameters = process_parameters(config['parameters_path'])
     forecast, num_models = next_forecast(data,parameters,config['target'],n=config['n'],p=config['p'])
     #output to JSON
