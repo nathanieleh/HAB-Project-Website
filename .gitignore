@@ -20,6 +20,8 @@
 /hab-frontend/yarn-error.log*
 /hab-frontend/.pnpm-debug.log*
 
+/hab-frontend/node_modules/
+
 
 /hab-frontend/*.tsbuildinfo
 /hab-frontend/next-env.d.ts
@@ -32,3 +34,6 @@ serviceAccountKey.json
 /*.env.*
 **/.env
 **/.env.*
+
+/app/100_sample_baseline_models.csv
+/app/data_w_gaps_and_wind.csv
