@@ -1,31 +1,3 @@
-/hab-frontend/node_modules
-/hab-frontend/.pnp
-/hab-frontend/.pnp.*
-/hab-frontend/.yarn/*
-!/hab-frontend/.yarn/patches
-!/hab-frontend/.yarn/plugins
-!/hab-frontend/.yarn/releases
-!/hab-frontend/.yarn/versions
-
-/hab-frontend/coverage
-/hab-frontend/.next/
-/hab-frontend/out/
-/hab-frontend/build
-
-
-/hab-frontend/.vercel/
-
-/hab-frontend/npm-debug.log*
-/hab-frontend/yarn-debug.log*
-/hab-frontend/yarn-error.log*
-/hab-frontend/.pnpm-debug.log*
-
-/hab-frontend/node_modules/
-
-
-/hab-frontend/*.tsbuildinfo
-/hab-frontend/next-env.d.ts
-
 .DS_Store
 venv/
 secrets.json
@@ -35,5 +7,46 @@ serviceAccountKey.json
 **/.env
 **/.env.*
 
+# files
 /app/100_sample_baseline_models.csv
 /app/data_w_gaps_and_wind.csv
+
+# frontend
+# dependencies
+/hab-frontend/node_modules
+/hab-frontend/.pnp
+/hab-frontend/.pnp.*
+/hab-frontend/.yarn/*
+!/hab/.yarn/patches
+!/hab/.yarn/plugins
+!/hab/.yarn/releases
+!/hab/.yarn/versions
+
+# testing
+/hab/coverage/
+
+# next.js
+/hab/.next/
+/hab/out/
+
+# production
+/hab/build/
+
+# misc
+/hab/.DS_Store
+/hab/*.pem
+
+# debug logs
+/hab/npm-debug.log*
+/hab/yarn-debug.log*
+/hab/yarn-error.log*
+/hab/.pnpm-debug.log*
+
+# env files
+/hab/.env*
+
+# vercel
+/hab/.vercel/
+
+/hab/*.tsbuildinfo
+/hab/next-env.d.ts
