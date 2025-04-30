@@ -13,41 +13,37 @@ serviceAccountKey.json
 
 # frontend
 # dependencies
-/fontend/node_modules
-/fontend/.pnp
-/fontend/.pnp.*
-/fontend/.yarn/*
-!/fontend/.yarn/patches
-!/fontend/.yarn/plugins
-!/fontend/.yarn/releases
-!/fontend/.yarn/versions
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.*
+/frontend/.yarn/*
+!/frontend/.yarn/patches
+!/frontend/.yarn/plugins
+!/frontend/.yarn/releases
+!/frontend/.yarn/versions
 
 # testing
-/fontend/coverage
+/frontend/coverage
 
 # next.js
-/fontend/.next/
-/fontend/out/
+/frontend/.next/
+/frontend/out/
 
 # production
-/fontend/build
+/frontend/build
 
 # misc
-/fontend/.DS_Store
-/fontend/*.pem
+/frontend/.DS_Store
+/frontend/*.pem
 
 # debug
-/fontend/npm-debug.log*
-/fontend/yarn-debug.log*
-/fontend/yarn-error.log*
-/fontend/.pnpm-debug.log*
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/.pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-/fontend/.env*
+/frontend/.env*
 
 # vercel
-/fontend/.vercel
-
-# typescript
-/fontend/*.tsbuildinfo
-/fontend/next-env.d.ts
+/frontend/.vercel
