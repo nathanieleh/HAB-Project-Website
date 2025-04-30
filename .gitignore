@@ -1,11 +1,11 @@
-/hab-frontend/node_modules
-/hab-frontend/.pnp
-/hab-frontend/.pnp.*
-/hab-frontend/.yarn/*
-!/hab-frontend/.yarn/patches
-!/hab-frontend/.yarn/plugins
-!/hab-frontend/.yarn/releases
-!/hab-frontend/.yarn/versions
+**/node_modules
+**/.pnp
+**/.pnp.*
+**/.yarn/*
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/releases
+!**/.yarn/versions
 
 /hab-frontend/coverage
 /hab-frontend/.next/
