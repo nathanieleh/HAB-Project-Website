@@ -10,7 +10,7 @@ export default function Navbar() {
                         src="/hknlogo3.svg"
                         className="ml-8"
                         alt="HKN Logo"
-                        width={130}
+                        width={100}
                         height={40}
                     />
                 </Link>
