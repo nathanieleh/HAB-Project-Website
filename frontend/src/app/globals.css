@@ -8,8 +8,8 @@
 
 /* Add custom tailwind stuff here */
 @theme {
-  --color-primary: #011930; /* Midnight Blue */
-  --color-secondary: #06E3E0 /* Light Blue (Bioluminescent Glow) */
+  --color-primary: #0C596B; /* Midnight Blue */
+  --color-secondary: #0BD3D4; /* Light Blue (Bioluminescent Glow) */
 }
 
 @media (prefers-color-scheme: dark) {
