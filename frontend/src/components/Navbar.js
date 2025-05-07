@@ -17,10 +17,10 @@ export default function Navbar() {
             </div>
             <ul className="flex space-x-4">
                 <li>
-                <Link href="/about">Forecasts</Link>
+                <Link href="/forecasts">Forecasts</Link>
                 </li>
                 <li>
-                <Link href="/contact">About</Link>
+                <Link href="/about">About</Link>
                 </li>
             </ul>
         </nav>

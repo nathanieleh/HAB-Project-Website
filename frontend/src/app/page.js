@@ -19,7 +19,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center mt-[10vh] text-secondary">
         Projected Bioluminescence Forecasts
       </h1>
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center mt-[10vh]">
         <TopBar forecasts={forecasts} />
       </div>
     </main>
