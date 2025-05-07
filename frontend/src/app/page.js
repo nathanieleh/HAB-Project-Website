@@ -14,7 +14,7 @@ export default function Home() {
     { day: 'Sun', value: 85 }
   ]
   return (
-    <main className="h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed">
+    <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed">
       <Navbar />
       <h1 className="text-4xl font-bold text-center mt-[10vh] text-secondary">
         Projected Bioluminescence Forecasts
