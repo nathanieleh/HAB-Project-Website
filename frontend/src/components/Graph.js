@@ -23,9 +23,9 @@ export default function Graph() {
   }, []);
 
   return (
-    <div className="flex justify-end w-full">
+    <div className="flex justify-end w-full mt-10 pr-10">
       <div
-        className="w-[50%] p-6 rounded-xl bg-primary/40 shadow-md shadow-secondary"
+        className="w-[50%] p-6 rounded divid-x bg-primary/40"
       >
         <h3 className="text-white text-lg mb-4">7 - Day Predictions</h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -41,7 +41,7 @@ export default function Graph() {
             </XAxis>
             <YAxis tick={{ fill: "white" }}>
               <Label
-                value="Model Consensus Percentage"
+                value="Models Predicted Bloom"
                 angle={-90}
                 position="insideLeft"
                 offset={-10}
