@@ -6,13 +6,13 @@ import TopBar from "../components/TopBar";
 export default function Home() {
   // eventually change to fetch from backend
   let forecasts = [
-    { day: 'Mon', value: 70 },
-    { day: 'Tue', value: 60 },
-    { day: 'Wed', value: 65 },
-    { day: 'Thu', value: 75 },
-    { day: 'Fri', value: 80 },
-    { day: 'Sat', value: 90 },
-    { day: 'Sun', value: 85 }
+    { day: 'Sun', value: 70 },
+    { day: 'Mon', value: 60 },
+    { day: 'Tue', value: 65 },
+    { day: 'Wed', value: 75 },
+    { day: 'Thu', value: 80 },
+    { day: 'Fri', value: 90 },
+    { day: 'Sat', value: 85 }
   ]
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed">
@@ -20,7 +20,23 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center mt-[10vh] text-secondary">
         Projected Bioluminescence Forecasts
       </h1>
-      <div className="flex items-center justify-center mt-[10vh]">
+      <h2 className="text-center text-white mt-[5vh]">
+        7-Day Predictions: {
+          (() => {
+            const today = new Date();
+            const sunday = new Date(today);
+            const saturday = new Date(today);
+            sunday.setDate(today.getDate() - today.getDay());
+            saturday.setDate(today.getDate() + (6 - today.getDay()));
+      
+            const format = (date) =>
+              date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
+      
+            return `Sun, ${format(sunday)} – Sat, ${format(saturday)}`;
+          })()
+        }
+      </h2>
+      <div className="flex items-center justify-center ">
         <TopBar forecasts={forecasts} />
       </div>
       <Graph />
