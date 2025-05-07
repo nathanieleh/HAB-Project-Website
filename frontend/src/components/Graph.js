@@ -25,14 +25,10 @@ export default function Graph() {
   return (
     <div className="flex justify-end w-full">
       <div
-        className="w-[50%] p-6 rounded-xl"
-        style={{
-          backgroundColor: "var(--color-primary)",
-          boxShadow: "0 0 10px var(--color-secondary)",
-        }}
+        className="w-[50%] p-6 rounded-xl bg-primary/40 shadow-md shadow-secondary"
       >
         <h3 className="text-white text-lg mb-4">7 - Day Predictions</h3>
-        <ResponsiveContainer width="100%" height={300} opacity={0.4}>
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
             <CartesianGrid stroke="rgba(255,255,255,0.2)" />
             <XAxis dataKey="day" tick={{ fill: "white" }}>
