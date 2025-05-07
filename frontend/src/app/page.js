@@ -1,18 +1,27 @@
-import Image from "next/image";
-import Navbar from "../components/Navbar";
+import Today from "../components/Today";
 import Graph from "../components/Graph";
+import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
 
-export default function Home() {
-  // eventually change to fetch from backend
+// Fetch forecasts from backend
+async function getForecasts() {
+  let forecasts;;
+  fetch("/dummy_data.json")
+    .then((res) => res.json())
+    .then((json) => forecasts = json);
+  return forecasts;
+}
+
+export default async function Home() {
+  //let forecasts = await getForecasts();
   let forecasts = [
-    { day: 'Sun', value: 70 },
-    { day: 'Mon', value: 60 },
-    { day: 'Tue', value: 65 },
-    { day: 'Wed', value: 75 },
-    { day: 'Thu', value: 80 },
-    { day: 'Fri', value: 90 },
-    { day: 'Sat', value: 85 }
+    { "day": "Sunday", "value": 760 },
+    { "day": "Monday", "value": 260 },
+    { "day": "Tuesday", "value": 10 },
+    { "day": "Wednesday", "value": 60 },
+    { "day": "Thursday", "value": 400 },
+    { "day": "Friday", "value": 560 },
+    { "day": "Saturday", "value": 920 }
   ]
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed">
@@ -39,7 +48,8 @@ export default function Home() {
       <div className="flex items-center justify-center ">
         <TopBar forecasts={forecasts} />
       </div>
-      <Graph />
+      <Today forecasts={forecasts}/>
+      <Graph forecasts={forecasts}/>
     </main>
   );
 }
