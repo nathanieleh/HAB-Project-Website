@@ -1,10 +1,19 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar() {
     return (
-        <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
+        <nav className="flex items-center justify-between p-4 bg-navbar/40 text-white">
             <div className="text-lg font-bold">
-                <Link href="/">MyApp</Link>
+                <Link href="/">
+                    <Image
+                        src="/hknlogo3.svg"
+                        className="ml-8"
+                        alt="HKN Logo"
+                        width={130}
+                        height={40}
+                    />
+                </Link>
             </div>
             <ul className="flex space-x-4">
                 <li>
