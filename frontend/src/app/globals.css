@@ -10,7 +10,7 @@
 @theme {
   --color-primary: #011930; /* Midnight Blue */
   --color-secondary: #06E3E0; /* Light Blue (Bioluminescent Glow) */
-  --color-navbar: #0C596B; /* Dark Turquoise */
+  --color-components: #0C596B; /* darker turquoise color */
 }
 
 @media (prefers-color-scheme: dark) {
