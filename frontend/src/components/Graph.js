@@ -13,14 +13,14 @@ import {
   Label,
 } from "recharts";
 
-export default function Graph() {
-  const [data, setData] = useState([]);
+export default function Graph({forecasts}) {
+//   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch("/dummy_data.json")
-      .then((res) => res.json())
-      .then((json) => setData(json));
-  }, []);
+//   useEffect(() => {
+//     fetch("/dummy_data.json")
+//       .then((res) => res.json())
+//       .then((json) => setData(json));
+//   }, []);
 
   return (
     <div className="flex justify-end w-full mt-10 pr-10">
@@ -29,7 +29,7 @@ export default function Graph() {
       >
         <h3 className="text-white text-lg mb-4">7 - Day Predictions</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
+          <LineChart data={forecasts} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
             <CartesianGrid stroke="rgba(255,255,255,0.2)" />
             <XAxis dataKey="day" tick={{ fill: "white" }}>
               <Label

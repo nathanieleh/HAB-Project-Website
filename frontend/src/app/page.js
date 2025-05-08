@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed">
       <Navbar />
-      <h1 className="text-4xl font-bold text-center mt-[10vh] text-secondary">
+      <h1 className="text-4xl font-bold text-center mt-[10vh] text-secondary shadow">
         Projected Bioluminescence Forecasts
       </h1>
       <h2 className="text-center text-white mt-[5vh]">
@@ -39,7 +39,7 @@ export default function Home() {
       <div className="flex items-center justify-center ">
         <TopBar forecasts={forecasts} />
       </div>
-      <Graph />
+      <Graph forecasts={forecasts}/>
     </main>
   );
 }
