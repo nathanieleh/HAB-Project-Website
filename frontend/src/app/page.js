@@ -45,11 +45,13 @@ export default async function Home() {
           })()
         }
       </h2>
-      <div className="flex items-center justify-center ">
-        <TopBar forecasts={forecasts} />
+      <div className="flex items-center justify-center mb-[5vh]">
+        <TopBar forecasts={forecasts} className=""/>
       </div>
-      <Today forecasts={forecasts}/>
-      <Graph forecasts={forecasts}/>
+      <div className="flex flex-col md:flex-row justify-center items-center gap-x-[10vw] gap-y-[4vh] md:gap-y-0">
+        <Today forecasts={forecasts} className="md:self-start"/>
+        <Graph forecasts={forecasts} className=""/>
+      </div>
     </main>
   );
 }

@@ -9,11 +9,10 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Legend,
   Label,
 } from "recharts";
 
-export default function Graph() {
+export default function Graph({ forecasts, className }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -23,13 +22,13 @@ export default function Graph() {
   }, []);
 
   return (
-    <div className="flex justify-end w-full mt-10 pr-10">
+    <div className={className}>
       <div
-        className="w-[50%] p-6 rounded divid-x bg-primary/40"
+        className="w-[80vw] md:w-[50vw] p-6 rounded-xl bg-primary/40"
       >
         <h3 className="text-white text-lg mb-4">7 - Day Predictions</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
+          <LineChart data={forecasts} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
             <CartesianGrid stroke="rgba(255,255,255,0.2)" />
             <XAxis dataKey="day" tick={{ fill: "white" }}>
               <Label

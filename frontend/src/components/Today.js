@@ -116,25 +116,26 @@ function Droplet({ predValue, className }) {
  * @param {JSON} forecasts - List of JSON object of forecasts ex:[{"day": "Sunday", "value": 760}]
  * @returns Component displaying today's forecast
  */
-export default function Today({forecasts}) {
-    let forecast = forecasts[0];
-    let day = forecast["day"];
+export default function Today({forecasts, className}) {
     let date = new Date();
+    let forecast = forecasts[date.getDay()];
     let dayOptions = { weekday: 'long' };
     return (
-        <div className="relative flex flex-col w-[30vw] items-center bg-primary/40 text-white rounded-xl">
-            <div className="flex flex-col w-full p-4">
-                <div className="flex flex-col items-center self-start mb-6">
-                    <h1 className="text-4xl self-start">Today</h1>
-                    <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}</p>
-                    <p>{date.toLocaleDateString()}</p>
+        <div className={className}>
+            <div className="relative flex flex-col w-[80vw] md:w-[30vw] items-center bg-primary/40 text-white rounded-xl">
+                <div className="flex flex-col w-full p-4">
+                    <div className="flex flex-col items-center self-start mb-6">
+                        <h1 className="text-4xl self-start">Today</h1>
+                        <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}</p>
+                        <p>{date.toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex flex-col items-start self-start">
+                        <p className="text-5xl">{forecast["value"]/10}%</p>
+                        <p>models predict a bloom</p>
+                    </div>
                 </div>
-                <div className="flex flex-col items-start self-start">
-                    <p className="text-5xl">{forecast["value"]/10}%</p>
-                    <p>models predict a bloom</p>
-                </div>
+                <Droplet predValue={forecast["value"]} className="w-[80px] h-[80px] absolute top-0 right-0"/>
             </div>
-            <Droplet predValue={forecast["value"]} className="w-[80px] h-[80px] absolute top-0 right-0"/>
         </div>
     );
 }
