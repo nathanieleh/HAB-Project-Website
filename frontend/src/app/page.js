@@ -52,7 +52,6 @@ export default async function Home() {
         <Today forecasts={forecasts} className="md:self-start"/>
         <Graph forecasts={forecasts} className=""/>
       </div>
-      <Graph forecasts={forecasts}/>
     </main>
   );
 }

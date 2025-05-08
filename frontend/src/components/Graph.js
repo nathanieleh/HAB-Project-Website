@@ -13,7 +13,7 @@ import {
 } from "recharts";
 
 export default function Graph({ forecasts, className }) {
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
 //   useEffect(() => {
 //     fetch("/dummy_data.json")
