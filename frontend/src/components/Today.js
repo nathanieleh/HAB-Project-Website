@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import {
+    Bar,
+    XAxis,
+    BarChart,
+    LabelList,
+    ResponsiveContainer,
+  } from "recharts";
 
 /**
  * Droplet Icon
@@ -119,22 +126,48 @@ function Droplet({ predValue, className }) {
 export default function Today({forecasts, className}) {
     let date = new Date();
     let forecast = forecasts[date.getDay()];
+    const TOTAL_MODELS = 1000;
+    let chartData = [
+        {'prediction': "Yes", 'value': forecast["value"]},
+        {'prediction': "No", 'value': TOTAL_MODELS - forecast["value"]},
+    ]
     let dayOptions = { weekday: 'long' };
     return (
         <div className={className}>
-            <div className="relative flex flex-col w-[80vw] md:w-[30vw] items-center bg-primary/40 text-white rounded-xl">
-                <div className="flex flex-col w-full p-4">
-                    <div className="flex flex-col items-center self-start mb-6">
+            <div className="relative flex flex-row w-[80vw] md:w-[40vw] items-center bg-primary/40 text-white rounded-xl">
+                <Droplet predValue={forecast["value"]} className="w-[80px] h-[80px] absolute top-0 right-0 m-4"/>
+                {/* Text Display */}
+                <div className="flex flex-col w-full items-start self-start p-6">
+                    <div className="flex flex-col items-center mb-6">
                         <h1 className="text-4xl self-start">Today</h1>
                         <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}</p>
                         <p>{date.toLocaleDateString()}</p>
                     </div>
-                    <div className="flex flex-col items-start self-start">
+                    <div className="flex flex-col items-start">
                         <p className="text-5xl">{forecast["value"]/10}%</p>
-                        <p>models predict a bloom</p>
+                        <p className="text-xs">models predict a bloom</p>
                     </div>
                 </div>
-                <Droplet predValue={forecast["value"]} className="w-[80px] h-[80px] absolute top-0 right-0"/>
+
+                {/* Bar Chart */}
+                <div className="flex flex-col w-full h-[40vh]">
+                    <ResponsiveContainer width="50%" height={220} className="absolute bottom-0 right-0">
+                        <BarChart
+                            data={chartData}
+                            margin={{ top: 15, right: 20, bottom: 10, left: 0 }}
+                            barCategoryGap="20%"
+                        >
+                            <Bar dataKey="value" fill="var(--color-secondary)">
+                                <LabelList
+                                    dataKey="value"
+                                    position="top"
+                                    style={{ fill: "white", fontSize: "12px" }}
+                                />
+                            </Bar>
+                            <XAxis dataKey="prediction" tick={{ fill: "white" }} interval={0} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
         </div>
     );
