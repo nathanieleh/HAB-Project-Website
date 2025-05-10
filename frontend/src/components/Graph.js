@@ -1,26 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
-  LineChart,
   Line,
-  CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
   Label,
+  Tooltip,
+  LineChart,
+  CartesianGrid,
+  ResponsiveContainer,
 } from "recharts";
 
+/**
+ * @param {JSON} forecasts - List of JSON object of forecasts ex:[{"day": "Sunday", "value": 760}]
+ * @param {string} className - tailwind CSS for entire component styling
+ * @returns Component displaying a line graph of the 7-day forecast
+ */
 export default function Graph({ forecasts, className }) {
-  // const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     fetch("/dummy_data.json")
-//       .then((res) => res.json())
-//       .then((json) => setData(json));
-//   }, []);
-
   return (
     <div className={className}>
       <div

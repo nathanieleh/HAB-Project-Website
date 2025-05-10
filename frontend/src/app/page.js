@@ -1,14 +1,11 @@
-import Today from "../components/Today";
-import Graph from "../components/Graph";
+import Image from "next/image";
 import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
-import Image from "next/image";
-
-// Function to scroll the top bar to today, if on phone
-function scrollToToday() {
-}
+import Today from "../components/Today";
+import Graph from "../components/Graph";
 
 export default async function Home() {
+  // TODO: Fetch forecasts from backend
   //let forecasts = await getForecasts();
   let forecasts = [
     { "day": "Sunday", "value": 760 },
@@ -19,6 +16,8 @@ export default async function Home() {
     { "day": "Friday", "value": 560 },
     { "day": "Saturday", "value": 920 }
   ]
+
+
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed items-center">
       <Navbar />

@@ -2,6 +2,11 @@
 
 import { useEffect } from "react";
 
+/**
+ * @param {JSON} forecasts - List of JSON object of forecasts ex:[{"day": "Sunday", "value": 760}]
+ * @param {string} className - tailwind CSS for entire component styling
+ * @returns Component displaying each day's numeric forecast
+ */
 export default function TopBar({ forecasts, className }) {
     // Function to scroll the top bar to today, if on phone
     useEffect(() => {
