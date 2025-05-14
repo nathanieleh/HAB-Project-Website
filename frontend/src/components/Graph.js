@@ -17,6 +17,10 @@ import {
  * @returns Component displaying a line graph of the 7-day forecast
  */
 export default function Graph({ forecasts, className }) {
+  forecasts = forecasts.map((item) => ({
+    day: item.day.slice(0, 3),
+    value: item.value,
+  }))
   return (
     <div className={className}>
       <div
