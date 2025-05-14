@@ -1,15 +1,15 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Add custom tailwind stuff here */
+@theme {
+  --color-primary: #0C596B; /* Midnight Blue */
+  --color-secondary: #0BD3D4; /* Light Blue (Bioluminescent Glow) */
 }
 
 @media (prefers-color-scheme: dark) {
