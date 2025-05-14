@@ -5,7 +5,7 @@ export default function Navbar() {
     return (
         <nav className="flex items-center justify-between p-4 text-white">
             <div className="text-lg font-bold">
-                <Link href="/">
+                <Link href="https://hkn.ucsd.edu/">
                     <Image
                         src="/hknlogo3.svg"
                         className="ml-8"
@@ -15,14 +15,6 @@ export default function Navbar() {
                     />
                 </Link>
             </div>
-            <ul className="flex space-x-4">
-                <li>
-                <Link href="/forecasts">Forecasts</Link>
-                </li>
-                <li>
-                <Link href="/about">About</Link>
-                </li>
-            </ul>
         </nav>
     );
 }

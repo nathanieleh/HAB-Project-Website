@@ -18,7 +18,7 @@ function Droplet({ predValue, className }) {
 
     // Animate on mount
     useEffect(() => {
-        setScale(1.0);
+        setScale(1.05);
 
         const timeout = setTimeout(() => {
             setScale(target);
