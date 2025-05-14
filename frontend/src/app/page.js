@@ -59,6 +59,18 @@ export default async function Home() {
         <Today forecasts={forecasts} className="md:self-start"/>
         <Graph forecasts={forecasts} className="mb-[5vh]"/>
       </div>
+
+
+      <div className = "flex flex-col justify-center items-center">
+        <h1 className="text-2xl text-center mt-[5vh]  text-secondary font-bold " >About</h1>
+        <p className="text-center text-white opacity-80 mt-[5vh] mb-[5vh] max-w-2xl leading-loose">
+          This project is a web application that provides a 7-day forecast of bioluminescence levels at Scripps Pier, La Jolla. The forecasts are based on data collected from various sources and are displayed in an easy-to-read format.
+          The application features a top bar that shows the forecast for each day, a detailed view of today's forecast, and a graph that visualizes the data over the week. The goal of this project is to help users plan their visits to Scripps Pier based on the bioluminescence levels.
+          
+          The application is built using Next.js and Tailwind CSS, providing a responsive and user-friendly interface. The data is fetched from a backend server and displayed in real-time, ensuring that users have the most up-to-date information.
+          The project is still in development, and future updates will include more features and improvements to the user experience. We welcome feedback and suggestions from users to help us make this application even better.  
+          </p>
+      </div>
     </main>
   );
 }
