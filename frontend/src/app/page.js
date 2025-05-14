@@ -20,7 +20,13 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed items-center">
-      <Navbar />
+      <Image
+          src="/hknlogo.svg"
+          className="pl-10 pt-8"
+          alt="HKN Logo"
+          width={180}
+          height={50}
+      />
       <h1 className="text-4xl font-bold text-center text-secondary shadow">
         Projected Bioluminescence Forecasts
       </h1>
