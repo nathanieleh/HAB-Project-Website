@@ -3,20 +3,11 @@ import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
 import Today from "../components/Today";
 import Graph from "../components/Graph";
+import forecastsData from "../data/forecasts.json";
 
 export default async function Home() {
-  // TODO: Fetch forecasts from backend
-  //let forecasts = await getForecasts();
-  let forecasts = [
-    { "day": "Sunday", "value": 760 },
-    { "day": "Monday", "value": 260 },
-    { "day": "Tuesday", "value": 10 },
-    { "day": "Wednesday", "value": 60 },
-    { "day": "Thursday", "value": 400 },
-    { "day": "Friday", "value": 560 },
-    { "day": "Saturday", "value": 920 }
-  ]
-
+  // Use the imported JSON data
+  let forecasts = forecastsData;
 
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed items-center">

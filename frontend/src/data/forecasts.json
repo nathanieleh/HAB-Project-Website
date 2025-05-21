@@ -1,0 +1,9 @@
+[
+  { "day": "Sunday", "value": 760 },
+  { "day": "Monday", "value": 260 },
+  { "day": "Tuesday", "value": 10 },
+  { "day": "Wednesday", "value": 60 },
+  { "day": "Thursday", "value": 400 },
+  { "day": "Friday", "value": 560 },
+  { "day": "Saturday", "value": 920 }
+] 
