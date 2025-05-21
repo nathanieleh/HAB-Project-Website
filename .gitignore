@@ -1,5 +1,6 @@
 .DS_Store
 venv/
+gcp-env/
 secrets.json
 serviceAccountKey.json
 /*.env

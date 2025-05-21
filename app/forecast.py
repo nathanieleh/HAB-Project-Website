@@ -172,6 +172,22 @@ def load_yaml(file_path):
     with open(file_path, 'r') as f:
         return yaml.safe_load(f)
 
+def download_from_drive(file_id, destination):
+    import io
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaIoBaseDownload
+    creds = service_account.Credentials.from_service_account_file(
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    )
+    service = build("drive", "v3", credentials=creds)
+    request = service.files().get_media(fileId=file_id)
+    with open(destination, "wb") as f:
+        downloader = MediaIoBaseDownload(f, request)
+        done = False
+        while not done:
+            _, done = downloader.next_chunk()
+
 
 def main():
     parser = argparse.ArgumentParser(description="Read a YAML config file.")
@@ -182,6 +198,7 @@ def main():
     print("YAML Contents:")
     for key, value in config.items():
         print(f"{key}: {value}")
+    download
     data = clean_data(config['file_name'])
     parameters = process_parameters(config['parameters_path'])
     forecast, num_models = next_forecast(data,parameters,config['target'],n=config['n'],p=config['p'])

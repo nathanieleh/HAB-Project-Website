@@ -19,11 +19,11 @@ RUN apt-get update && apt-get install -y \
 
 # Copy relevant files
 COPY requirements.txt ./
-COPY app/ ./app/
+COPY app/ ./
 
 # Install pyEDM from GitHub + other packages
 RUN pip install --no-cache-dir git+https://github.com/SugiharaLab/pyEDM.git && \
     pip install --no-cache-dir -r requirements.txt
 
 # Set the entrypoint
-ENTRYPOINT ["python", "app/forecast.py"]
+ENTRYPOINT ["python3", "forecast.py"]
