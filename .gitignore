@@ -1,11 +1,42 @@
 .DS_Store
 venv/
+gcp-env/
 secrets.json
 serviceAccountKey.json
 /*.env
 /*.env.*
 **/.env
 **/.env.*
+
+# Google Cloud & Authentication
+service-account-key.json
+**/service-account-key.json
+**/service_account_key.json
+**/gcp-key.json
+**/gcp_key.json
+**/google-credentials.json
+**/google_credentials.json
+.config/
+credentials/
+**/credentials.json
+**/client_secrets.json
+**/token.json
+**/token.pickle
+**/*.key
+**/*.pem
+**/*.crt
+
+# Secrets and Configuration
+**/*.secret
+**/*.secret.*
+**/secrets/
+**/*.config
+**/config.json
+**/*.conf
+**/local_settings.*
+**/*.private
+**/*.password
+**/*.token
 
 # files
 /app/100_sample_baseline_models.csv
@@ -47,3 +78,26 @@ serviceAccountKey.json
 
 # vercel
 /frontend/.vercel
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

@@ -19,11 +19,19 @@ RUN apt-get update && apt-get install -y \
 
 # Copy relevant files
 COPY requirements.txt ./
-COPY app/ ./app/
+COPY app/ ./
 
 # Install pyEDM from GitHub + other packages
 RUN pip install --no-cache-dir git+https://github.com/SugiharaLab/pyEDM.git && \
     pip install --no-cache-dir -r requirements.txt
 
-# Set the entrypoint
-ENTRYPOINT ["python", "app/forecast.py"]
+# Create a wrapper script to pass environment variables as arguments
+RUN echo '#!/bin/bash\n\
+python3 forecast.py \
+--raw-data-id "$RAW_DATA_FILE_ID" \
+--parameters-id "$PARAMETERS_FILE_ID" \
+--output-folder-id "$OUTPUT_FOLDER_ID"' > /app/run.sh && \
+chmod +x /app/run.sh
+
+# Set the entrypoint to use the wrapper script
+ENTRYPOINT ["/app/run.sh"]
