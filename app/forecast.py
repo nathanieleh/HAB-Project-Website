@@ -132,11 +132,17 @@ def next_forecast(data,params,target,n=300,p=0.05,lib_off=-2):#data,params,targe
     return preds> (n*p), preds
 
 
-def clean_data(data_path):
-    paper_data = pd.read_csv(data_path)
+def clean_data(paper_data):
+    """Clean and process the data.
+    Args:
+        paper_data: Either a path to CSV file or a pandas DataFrame
+    """
+    if isinstance(paper_data, str):
+        paper_data = pd.read_csv(paper_data)
+    
     paper_data = paper_data.set_index('time')
     paper_data['Time'] = paper_data.index.astype(int)
-    paper_data['Avg_Chloro'] #= paper_data['Avg_Chloro'].apply(np.log1p) #LOG AMPUTATION
+    
     #IMPUTE HAB DATA
     #Build basic linear regression model as sanity check
     # Custom impute missing values with the average of the value in front and behind of it 
@@ -200,7 +206,7 @@ def initialize_drive_service():
     try:
         credentials = service_account.Credentials.from_service_account_file(
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'],
-            scopes=['https://www.googleapis.com/auth/drive.file']
+            scopes=['https://www.googleapis.com/auth/drive']
         )
         return build('drive', 'v3', credentials=credentials)
     except Exception as e:
@@ -292,6 +298,7 @@ def temporary_forecast_workflow(raw_data_file_id, parameters_file_id, output_fol
     ]
     
     # Initialize Drive service
+    print("Initializing Drive service...")
     service = initialize_drive_service()
     if not service:
         print("Failed to initialize Drive service")
@@ -302,19 +309,35 @@ def temporary_forecast_workflow(raw_data_file_id, parameters_file_id, output_fol
     
     try:
         # Download and process files
+        print("Downloading raw data file...")
         download_file_from_drive(service, raw_data_file_id, 'temp_raw_data.csv')
+        print("Downloading parameters file...")
         download_file_from_drive(service, parameters_file_id, 'temp_parameters.csv')
 
         # Read and process data
+        print("Reading raw data...")
         raw_data = pd.read_csv('temp_raw_data.csv')
+        print("Raw data shape:", raw_data.shape)
+        print("Raw data columns:", raw_data.columns.tolist())
+        
+        print("Reading parameters...")
         parameters = pd.read_csv('temp_parameters.csv')
+        print("Parameters shape:", parameters.shape)
+        print("Parameters columns:", parameters.columns.tolist())
         
         # Process parameters
+        print("Processing parameters...")
         parameters['pred'] = parameters['pred'].apply(str_to_list)
         parameters['columns'] = parameters['columns'].apply(ast.literal_eval)
+        print("Parameters processed successfully")
 
         # Generate forecast
+        print("Cleaning data...")
         data = clean_data(raw_data)
+        print("Cleaned data shape:", data.shape)
+        print("Cleaned data columns:", data.columns.tolist())
+        
+        print("Generating forecast...")
         forecast, num_models = next_forecast(
             data,
             parameters,
@@ -322,26 +345,34 @@ def temporary_forecast_workflow(raw_data_file_id, parameters_file_id, output_fol
             n=300,
             p=0.05
         )
+        print("Forecast generated successfully")
 
         # Prepare forecast output
+        print("Preparing forecast output...")
         days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         forecast_output = [
             {"day": day, "value": int(num_models[i])}
             for i, day in enumerate(days)
         ]
+        print("Forecast output prepared")
 
     except Exception as e:
-        print(f"Error in forecast workflow: {e}")
+        import traceback
+        print(f"Error in forecast workflow: {str(e)}")
+        print("Full traceback:")
+        print(traceback.format_exc())
         print("Using default forecast data")
         forecast_output = default_forecast
 
     finally:
         try:
             # Always write output file (either computed or default)
+            print("Writing output file...")
             with open(output_file, 'w') as f:
                 json.dump(forecast_output, f, indent=2)
 
             # Upload to Drive
+            print("Uploading to Drive...")
             file_id = upload_to_drive(service, output_file, output_folder_id, filename='latest_forecast.json')
             if file_id:
                 print(f"Successfully uploaded forecast. File ID: {file_id}")
@@ -349,12 +380,15 @@ def temporary_forecast_workflow(raw_data_file_id, parameters_file_id, output_fol
                 print("Failed to upload forecast")
 
             # Cleanup temporary files
+            print("Cleaning up temporary files...")
             for temp_file in ['temp_raw_data.csv', 'temp_parameters.csv', output_file]:
                 if os.path.exists(temp_file):
                     os.remove(temp_file)
+            print("Cleanup complete")
 
         except Exception as e:
             print(f"Error in cleanup/upload phase: {e}")
+            print(traceback.format_exc())
 
 def main():
     """
