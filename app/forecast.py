@@ -7,6 +7,12 @@ import ast
 import json
 import yaml
 import argparse
+import os
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
+import io
+import datetime
 
 import warnings
 warnings.filterwarnings("ignore", 
@@ -189,7 +195,174 @@ def download_from_drive(file_id, destination):
             _, done = downloader.next_chunk()
 
 
+def initialize_drive_service():
+    """Initialize and return Google Drive service."""
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'],
+            scopes=['https://www.googleapis.com/auth/drive.file']
+        )
+        return build('drive', 'v3', credentials=credentials)
+    except Exception as e:
+        print(f"Error initializing Drive service: {e}")
+        return None
+
+def download_file_from_drive(service, file_id, destination):
+    """Download a file from Google Drive."""
+    try:
+        request = service.files().get_media(fileId=file_id)
+        file = io.BytesIO()
+        downloader = MediaIoBaseDownload(file, request)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+            print(f"Download {int(status.progress() * 100)}%")
+        file.seek(0)
+        with open(destination, 'wb') as f:
+            f.write(file.read())
+        return True
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+        return False
+
+def upload_to_drive(service, file_path, folder_id, filename=None):
+    """Upload a file to Google Drive. If a file with the same name exists in the folder, it will be overwritten.
+    
+    Args:
+        service: Google Drive service instance
+        file_path: Path to the file to upload
+        folder_id: ID of the folder to upload to
+        filename: Optional custom filename, if None uses the original filename
+    """
+    try:
+        # Use provided filename or get from path
+        file_name = filename or os.path.basename(file_path)
+        
+        # Check if file with same name exists in folder
+        response = service.files().list(
+            q=f"name='{file_name}' and '{folder_id}' in parents and trashed=false",
+            spaces='drive',
+            fields='files(id)'
+        ).execute()
+        
+        # If file exists, delete it
+        for file in response.get('files', []):
+            service.files().delete(fileId=file['id']).execute()
+            print(f"Deleted existing file with name: {file_name}")
+        
+        # Upload new file
+        file_metadata = {
+            'name': file_name,
+            'parents': [folder_id]
+        }
+        media = MediaFileUpload(
+            file_path,
+            mimetype='application/json',
+            resumable=True
+        )
+        file = service.files().create(
+            body=file_metadata,
+            media_body=media,
+            fields='id'
+        ).execute()
+        return file.get('id')
+    except Exception as e:
+        print(f"Error uploading file: {e}")
+        return None
+
+def temporary_forecast_workflow(raw_data_file_id, parameters_file_id, output_folder_id):
+    """
+    Temporary workflow to generate forecasts using Google Drive files.
+    If the workflow fails, it will upload a default forecast file.
+    
+    Args:
+        raw_data_file_id (str): Google Drive ID for raw data CSV
+        parameters_file_id (str): Google Drive ID for model parameters
+        output_folder_id (str): Google Drive folder ID for output
+    """
+    # Default forecast data
+    default_forecast = [
+        {"day": "Sunday", "value": 760},
+        {"day": "Monday", "value": 260},
+        {"day": "Tuesday", "value": 10},
+        {"day": "Wednesday", "value": 60},
+        {"day": "Thursday", "value": 400},
+        {"day": "Friday", "value": 560},
+        {"day": "Saturday", "value": 920}
+    ]
+    
+    # Initialize Drive service
+    service = initialize_drive_service()
+    if not service:
+        print("Failed to initialize Drive service")
+        return
+
+    # Use a consistent filename for the forecast
+    output_file = 'latest_forecast.json'
+    
+    try:
+        # Download and process files
+        download_file_from_drive(service, raw_data_file_id, 'temp_raw_data.csv')
+        download_file_from_drive(service, parameters_file_id, 'temp_parameters.csv')
+
+        # Read and process data
+        raw_data = pd.read_csv('temp_raw_data.csv')
+        parameters = pd.read_csv('temp_parameters.csv')
+        
+        # Process parameters
+        parameters['pred'] = parameters['pred'].apply(str_to_list)
+        parameters['columns'] = parameters['columns'].apply(ast.literal_eval)
+
+        # Generate forecast
+        data = clean_data(raw_data)
+        forecast, num_models = next_forecast(
+            data,
+            parameters,
+            target='Avg_Chloro',
+            n=300,
+            p=0.05
+        )
+
+        # Prepare forecast output
+        days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        forecast_output = [
+            {"day": day, "value": int(num_models[i])}
+            for i, day in enumerate(days)
+        ]
+
+    except Exception as e:
+        print(f"Error in forecast workflow: {e}")
+        print("Using default forecast data")
+        forecast_output = default_forecast
+
+    finally:
+        try:
+            # Always write output file (either computed or default)
+            with open(output_file, 'w') as f:
+                json.dump(forecast_output, f, indent=2)
+
+            # Upload to Drive
+            file_id = upload_to_drive(service, output_file, output_folder_id, filename='latest_forecast.json')
+            if file_id:
+                print(f"Successfully uploaded forecast. File ID: {file_id}")
+            else:
+                print("Failed to upload forecast")
+
+            # Cleanup temporary files
+            for temp_file in ['temp_raw_data.csv', 'temp_parameters.csv', output_file]:
+                if os.path.exists(temp_file):
+                    os.remove(temp_file)
+
+        except Exception as e:
+            print(f"Error in cleanup/upload phase: {e}")
+
 def main():
+    """
+    Original main function kept for reference.
+    Comment out the original workflow and add the new temporary workflow.
+    """
+    # Original workflow (kept for reference)
+    """
     parser = argparse.ArgumentParser(description="Read a YAML config file.")
     parser.add_argument("config", type=str, help="Path to the YAML config file")
     args = parser.parse_args()
@@ -198,13 +371,27 @@ def main():
     print("YAML Contents:")
     for key, value in config.items():
         print(f"{key}: {value}")
-    download
+    
     data = clean_data(config['file_name'])
     parameters = process_parameters(config['parameters_path'])
     forecast, num_models = next_forecast(data,parameters,config['target'],n=config['n'],p=config['p'])
-    #output to JSON
     print(f'Bloom prediction: {forecast[-1]}')
     print(f'Num of models which predict bloom: {num_models[-1]}')
+    """
+
+    # New temporary workflow
+    parser = argparse.ArgumentParser(description="Run forecast with Google Drive files")
+    parser.add_argument("--raw-data-id", required=True, help="Google Drive ID for raw data CSV")
+    parser.add_argument("--parameters-id", required=True, help="Google Drive ID for parameters file")
+    parser.add_argument("--output-folder-id", required=True, help="Google Drive folder ID for output")
+    
+    args = parser.parse_args()
+    
+    temporary_forecast_workflow(
+        args.raw_data_id,
+        args.parameters_id,
+        args.output_folder_id
+    )
 
 if __name__ == "__main__":
     main()

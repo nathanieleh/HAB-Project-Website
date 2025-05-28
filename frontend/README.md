@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HAB Project Frontend
 
-## Getting Started
+This is the frontend application for the HAB (Harmful Algal Bloom) Project, providing real-time bioluminescence forecasts for Scripps Pier, La Jolla.
 
-First, run the development server:
+## Setup Instructions
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Environment Setup
+
+Create a `.env.local` file in the frontend directory with the following:
+
+```env
+# Google Drive API credentials (Service Account JSON)
+GOOGLE_APPLICATION_CREDENTIALS={"type": "service_account", ...} # Your full service account JSON
+
+# Google Drive File ID for forecast data
+NEXT_PUBLIC_FORECAST_FILE_ID=your-file-id
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Google Drive Setup
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. Create a Google Cloud Project
+2. Enable the Google Drive API
+3. Create a Service Account and download credentials
+4. Share your forecast data folder with the service account email
+5. Note down the File ID from Google Drive URL
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Installation & Running
 
-## Learn More
+```bash
+# Install dependencies
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Run development server
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build for production
+npm run build
+npm start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Architecture
 
-## Deploy on Vercel
+### Data Flow
+1. Weekly scheduled job runs ML model (separate backend process)
+2. Results are saved to Google Drive as JSON file
+3. Frontend fetches latest data from Google Drive via API route
+4. Data is validated and displayed to user
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Components
+- `page.js`: Main page component, handles data fetching
+- `api/forecast/route.js`: API route for Google Drive interaction
+- Components:
+  - `TopBar`: 7-day forecast overview
+  - `Today`: Detailed current day forecast
+  - `Graph`: Weekly forecast visualization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Data Format
+The forecast JSON file should follow this structure:
+```json
+[
+  { "day": "Sunday", "value": 760 },
+  { "day": "Monday", "value": 260 },
+  ...
+]
+```
+
+## Error Handling
+- Invalid/missing Google Drive credentials
+- File not found or inaccessible
+- Invalid data format
+- Network failures
+
+## Performance
+- Request timing logged to console
+- No-store cache policy for real-time data
+- Google Drive API for reliable file storage/retrieval

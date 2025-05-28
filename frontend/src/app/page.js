@@ -3,11 +3,76 @@ import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
 import Today from "../components/Today";
 import Graph from "../components/Graph";
-import forecastsData from "../data/forecasts.json";
+
+async function getForecastData() {
+  const defaultData = [
+    { "day": "Sunday", "value": 760 },
+    { "day": "Monday", "value": 260 },
+    { "day": "Tuesday", "value": 10 },
+    { "day": "Wednesday", "value": 60 },
+    { "day": "Thursday", "value": 400 },
+    { "day": "Friday", "value": 560 },
+    { "day": "Saturday", "value": 920 }
+  ];
+
+  try {
+    const startTime = performance.now();
+    
+    // Replace with your Google Drive file ID for the latest forecast
+    const FORECAST_FILE_ID = 'your-google-drive-file-id';
+    
+    // Fetch from your backend proxy that handles Google Drive API authentication
+    const response = await fetch(`/api/forecast?fileId=${FORECAST_FILE_ID}`, {
+      cache: 'no-store', // This ensures fresh data on every request
+      method: 'GET',
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch forecast data from Google Drive');
+    }
+    
+    const data = await response.json();
+    
+    const endTime = performance.now();
+    console.log(`Forecast data fetch from Google Drive took ${(endTime - startTime).toFixed(2)}ms`);
+
+    // Validate data structure
+    if (!Array.isArray(data)) {
+      console.error('Invalid data structure: expected array, got:', typeof data);
+      return defaultData;
+    }
+
+    if (data.length !== 7) {
+      console.error('Invalid data length: expected 7 days, got:', data.length);
+      return defaultData;
+    }
+
+    // Validate each day's data structure
+    const isValidDayData = (day) => {
+      return (
+        typeof day === 'object' &&
+        day !== null &&
+        typeof day.day === 'string' &&
+        typeof day.value === 'number' &&
+        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].includes(day.day)
+      );
+    };
+
+    if (!data.every(isValidDayData)) {
+      console.error('Invalid day data structure in response');
+      return defaultData;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching forecast data from Google Drive:', error);
+    return defaultData;
+  }
+}
 
 export default async function Home() {
-  // Use the imported JSON data
-  let forecasts = forecastsData;
+  // Fetch the forecast data
+  const forecasts = await getForecastData();
 
   return (
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed items-center">
