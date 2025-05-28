@@ -102,10 +102,6 @@ pip install -r requirements.txt
 python forecast.py
 ```
 
-## Contributing
-
-See CONTRIBUTING.md for guidelines on how to contribute to this project.
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
