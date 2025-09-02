@@ -3,38 +3,31 @@ import Navbar from "../components/Navbar";
 import TopBar from "../components/TopBar";
 import Today from "../components/Today";
 import Graph from "../components/Graph";
+import forecastdata from "../data/forecasts"
 
 async function getForecastData() {
-  const defaultData = [
-    { "day": "Sunday", "value": 760 },
-    { "day": "Monday", "value": 260 },
-    { "day": "Tuesday", "value": 10 },
-    { "day": "Wednesday", "value": 60 },
-    { "day": "Thursday", "value": 400 },
-    { "day": "Friday", "value": 560 },
-    { "day": "Saturday", "value": 920 }
-  ];
 
   try {
     const startTime = performance.now();
     
-    // Replace with your Google Drive file ID for the latest forecast
-    const FORECAST_FILE_ID = 'your-google-drive-file-id';
+    // // Replace with your Google Drive file ID for the latest forecast
+    // const FORECAST_FILE_ID = 'your-google-drive-file-id';
     
-    // Fetch from your backend proxy that handles Google Drive API authentication
-    const response = await fetch(`/api/forecast?fileId=${FORECAST_FILE_ID}`, {
-      cache: 'no-store', // This ensures fresh data on every request
-      method: 'GET',
-    });
+    // // Fetch from your backend proxy that handles Google Drive API authentication
+    // const response = await fetch(`/api/forecast?fileId=${FORECAST_FILE_ID}`, {
+    //   cache: 'no-store', // This ensures fresh data on every request
+    //   method: 'GET',
+    // });
     
-    if (!response.ok) {
-      throw new Error('Failed to fetch forecast data from Google Drive');
-    }
+    // if (!response.ok) {
+    //   throw new Error('Failed to fetch forecast data from Google Drive');
+    // }
     
-    const data = await response.json();
+    // const data = await response.json();
+    const data  = forecastdata;
     
-    const endTime = performance.now();
-    console.log(`Forecast data fetch from Google Drive took ${(endTime - startTime).toFixed(2)}ms`);
+    //const endTime = performance.now();
+    //console.log(`Forecast data fetch from Google Drive took ${(endTime - startTime).toFixed(2)}ms`);
 
     // Validate data structure
     if (!Array.isArray(data)) {

@@ -1,4 +1,4 @@
-import { google } from 'googleapis';
+/*import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
 // Initialize Google Drive API client
@@ -48,4 +48,4 @@ export async function GET(request) {
       { status: 500 }
     );
   }
-} 
+}*/
