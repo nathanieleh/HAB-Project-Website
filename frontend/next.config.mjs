@@ -7,6 +7,9 @@ const nextConfig = {
     });
     return config;
   },
+  
+  // 👇 This makes Next.js generate the static "out/" folder on build
+  output: 'export',
 };
 
 export default nextConfig;

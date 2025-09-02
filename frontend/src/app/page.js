@@ -4,6 +4,8 @@ import TopBar from "../components/TopBar";
 import Today from "../components/Today";
 import Graph from "../components/Graph";
 import forecastdata from "../data/forecasts"
+import './globals.css'
+
 
 async function getForecastData() {
 
