@@ -37,24 +37,27 @@ async function getForecastData() {
       return defaultData;
     }
 
-    if (data.length !== 7) {
-      console.error('Invalid data length: expected 7 days, got:', data.length);
+    if (data.length !== 3) {
+      console.error('Invalid data length: expected 3 weeks, got:', data.length);
       return defaultData;
     }
 
-    // Validate each day's data structure
-    const isValidDayData = (day) => {
+    // Validate each week's data structure
+    const isValidWeekData = (week) => {
       return (
-        typeof day === 'object' &&
-        day !== null &&
-        typeof day.day === 'string' &&
-        typeof day.value === 'number' &&
-        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].includes(day.day)
+        typeof week === 'object' &&
+        week !== null &&
+        typeof week.Bloom_type === 'string' &&
+        typeof week.day === 'string' &&
+        typeof week.Date === 'string' &&
+        typeof week.CI === 'number' &&
+        typeof week.Likeliness === 'string' &&
+        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].includes(week.day)
       );
     };
 
-    if (!data.every(isValidDayData)) {
-      console.error('Invalid day data structure in response');
+    if (!data.every(isValidWeekData)) {
+      console.error('Invalid week data structure in response');
       return defaultData;
     }
 

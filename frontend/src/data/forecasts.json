@@ -1,9 +1,5 @@
-[
-  { "day": "Sunday", "value": 760 },
-  { "day": "Monday", "value": 260 },
-  { "day": "Tuesday", "value": 10 },
-  { "day": "Wednesday", "value": 60 },
-  { "day": "Thursday", "value": 400 },
-  { "day": "Friday", "value": 560 },
-  { "day": "Saturday", "value": 920 }
-] 
+[ 
+  { "Bloom_type": "Bioluminescent", "day": "Tuesday", "Date": "2025-06-03", "CI": 25.33333333333333, "Likeliness": "Unlikely" },
+  { "Bloom_type": "Bioluminescent", "day": "Tuesday", "Date": "2025-06-10", "CI": 90.0, "Likeliness": "Unlikely" },
+  { "Bloom_type": "Bioluminescent", "day": "Tuesday", "Date": "2025-06-17", "CI": 90.0, "Likeliness": "Unlikely" }
+]
