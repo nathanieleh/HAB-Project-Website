@@ -97,18 +97,22 @@ export default async function Home() {
         </h2>
       </div>
       <h2 className="text-center text-white mt-[5vh] mb-4">
-        7-Day Predictions: {
+        3-Week Predictions: {
           (() => {
             const today = new Date();
-            const sunday = new Date(today);
-            const saturday = new Date(today);
-            sunday.setDate(today.getDate() - today.getDay());
-            saturday.setDate(today.getDate() + (6 - today.getDay()));
-      
+            const firstWeek = new Date(today);
+            const finalWeek = new Date(today);
+
+            // Set to the nearest Tuesday
+            firstWeek.setDate(today.getDate() - today.getDay() + 2);
+
+            // Set to the Tuesday 2 weeks later
+            finalWeek.setDate(firstWeek.getDate() + 14);
+
             const format = (date) =>
               date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-      
-            return `Sun, ${format(sunday)} – Sat, ${format(saturday)}`;
+
+            return `Tue, ${format(firstWeek)} – Tue, ${format(finalWeek)}`;
           })()
         }
       </h2>
