@@ -126,48 +126,37 @@ function Droplet({ predValue, className }) {
  */
 export default function Today({forecasts, className}) {
     let date = new Date();
-    let forecast = forecasts[date.getDay()];
-    const TOTAL_MODELS = 1000;
-    let chartData = [
-        {'prediction': "Yes", 'value': forecast["value"]},
-        {'prediction': "No", 'value': TOTAL_MODELS - forecast["value"]},
-    ]
+    let forecast = forecasts[0]; // This week's forecast
+    const dropletValue = forecast["Likeliness"] == "Likely" ? 1000 : 300;
+    const confidenceValue = parseInt(forecast["CI"]);
+
     let dayOptions = { weekday: 'long' };
     return (
         <div className={className}>
-            <div className="relative flex flex-row w-[80vw] md:w-[40vw] items-center bg-primary/40 text-white rounded-xl">
-                <Droplet predValue={forecast["value"]} className="w-[80px] h-[80px] absolute top-0 right-0 m-4"/>
+            <div className="relative grid w-[80vw] md:w-[40vw] justify-center bg-primary/40 text-white rounded-xl">
                 {/* Text Display */}
-                <div className="flex flex-col w-full items-start self-start p-6">
+                <div className="flex flex-col w-full items-center self-center p-6">
                     <div className="flex flex-col items-center mb-6">
-                        <h1 className="text-4xl self-start">Today</h1>
-                        <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}</p>
-                        <p>{date.toLocaleDateString()}</p>
-                    </div>
-                    <div className="flex flex-col items-start">
-                        <p className="text-5xl">{forecast["value"]/10}%</p>
-                        <p className="text-xs">models predict a bloom</p>
+                        <h1 className="text-4xl self-center">Today</h1>
+                        <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}, {date.toLocaleDateString()}</p>
                     </div>
                 </div>
 
-                {/* Bar Chart */}
-                <div className="flex flex-col w-full h-[40vh]">
-                    <ResponsiveContainer width="50%" height={220} className="absolute bottom-0 right-0">
-                        <BarChart
-                            data={chartData}
-                            margin={{ top: 15, right: 20, bottom: 10, left: 0 }}
-                            barCategoryGap="20%"
-                        >
-                            <Bar dataKey="value" fill="var(--color-secondary)">
-                                <LabelList
-                                    dataKey="value"
-                                    position="top"
-                                    style={{ fill: "white", fontSize: "12px" }}
-                                />
-                            </Bar>
-                            <XAxis dataKey="prediction" tick={{ fill: "white" }} interval={0} />
-                        </BarChart>
-                    </ResponsiveContainer>
+                {/* Likeliness and Droplet Display */}
+                <div className="w-[150px] h-[100px] md:w-[200px] md:h-[150px] self-end mb-4 mr-4">
+                    <h1 className="flex items-center justify-center">
+                        <p className="text-5xl">{forecast["Likeliness"]}</p>
+                        <div className="relative">
+                            <Droplet predValue={dropletValue} className="w-[100px] h-[100px]" />
+                            {/* Tooltip for confidence */}
+                            <div className="absolute top-0 right-0 group">
+                                <span className="text-sm bg-gray-200 text-gray-700 rounded-full px-1">i</span>
+                                <div className="absolute left-1 top-0 hidden text-nowrap translate-x-1/32 px-1 rounded-md bg-gray-800 text-xs text-white group-hover:block">
+                                    Model Confidence: {confidenceValue}% | Likeliness calculated on every Tuesday of the week.
+                                </div>
+                            </div>
+                        </div>
+                    </h1>
                 </div>
             </div>
         </div>
