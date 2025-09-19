@@ -120,15 +120,24 @@ function Droplet({ predValue, className }) {
 }
 
 /**
- * @param {JSON} forecasts - List of JSON object of forecasts ex:[{"day": "Sunday", "value": 760}]
+ * @param {JSON} forecasts - List of JSON object of forecasts ex:[{ "Bloom_type": "Bioluminescent", "day": "Tuesday", "Date": "2025-06-03", "CI": 25.33333333333333, "Likeliness": "Unlikely" }]
  * @param {string} className - tailwind CSS for entire component styling
- * @returns Component displaying today's forecast
+ * @returns Component displaying this week's forecast
  */
 export default function Today({forecasts, className}) {
-    let date = new Date();
     let forecast = forecasts[0]; // This week's forecast
     const dropletValue = forecast["Likeliness"] == "Likely" ? 1000 : 300;
     const confidenceValue = parseInt(forecast["CI"]);
+
+    const today = new Date();
+    const beginningOfWeek = new Date(today);
+    const endOfWeek = new Date(today);
+
+    // Set to the beginning of the week (Sunday)
+    beginningOfWeek.setDate(today.getDate() - today.getDay());
+
+    // Set to the end of the week (Saturday)
+    endOfWeek.setDate(beginningOfWeek.getDate() + 6);
 
     let dayOptions = { weekday: 'long' };
     return (
@@ -137,8 +146,8 @@ export default function Today({forecasts, className}) {
                 {/* Text Display */}
                 <div className="flex flex-col w-full items-center self-center p-6">
                     <div className="flex flex-col items-center mb-6">
-                        <h1 className="text-4xl self-center">Today</h1>
-                        <p>{new Intl.DateTimeFormat("en-US", dayOptions).format(date)}, {date.toLocaleDateString()}</p>
+                        <h1 className="text-4xl self-center">This Week</h1>
+                        <p>{beginningOfWeek.toLocaleDateString()} - {endOfWeek.toLocaleDateString()}</p>
                     </div>
                 </div>
 
