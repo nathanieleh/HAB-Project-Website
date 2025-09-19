@@ -100,19 +100,19 @@ export default async function Home() {
         3-Week Predictions: {
           (() => {
             const today = new Date();
-            const firstWeek = new Date(today);
-            const finalWeek = new Date(today);
+            const firstWeekStart = new Date(today);
+            const finalWeekEnd = new Date(today);
 
-            // Set to the nearest Tuesday
-            firstWeek.setDate(today.getDate() - today.getDay() + 2);
+            // Set to this week's Sunday
+            firstWeekStart.setDate(today.getDate() - today.getDay());
 
-            // Set to the Tuesday 2 weeks later
-            finalWeek.setDate(firstWeek.getDate() + 14);
+            // Set to the Saturday 2 weeks later
+            finalWeekEnd.setDate(firstWeekStart.getDate() + 20);
 
             const format = (date) =>
               date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
-            return `Tue, ${format(firstWeek)} – Tue, ${format(finalWeek)}`;
+            return `Sun, ${format(firstWeekStart)}th – Sat, ${format(finalWeekEnd)}th`;
           })()
         }
       </h2>
