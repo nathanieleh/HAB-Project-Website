@@ -120,9 +120,9 @@ function Droplet({ predValue, className }) {
 }
 
 /**
- * @param {JSON} forecasts - List of JSON object of forecasts ex:[{"day": "Sunday", "value": 760}]
+ * @param {JSON} forecasts - List of JSON object of forecasts ex:[{ "Bloom_type": "Bioluminescent", "day": "Tuesday", "Date": "2025-06-03", "CI": 25.33333333333333, "Likeliness": "Unlikely" }]
  * @param {string} className - tailwind CSS for entire component styling
- * @returns Component displaying today's forecast
+ * @returns Component displaying this week's forecast
  */
 export default function Today({forecasts, className}) {
     let forecast = forecasts[0]; // This week's forecast
