@@ -21,6 +21,9 @@ export default function Graph({ forecasts, className }) {
     week: "Week " + (index + 1),
     value: item.Likeliness === "Likely" ? 1 : 0,
   }))
+
+  const yLabels = ["Unlikely", "Likely"];
+
   return (
     <div className={className}>
       <div
@@ -38,7 +41,7 @@ export default function Graph({ forecasts, className }) {
                 style={{ fill: "white", textAnchor: "middle" }}
               />
             </XAxis>
-            <YAxis domain={[0, 1]} tick={{ fill: "white" }} ticks={[0, 1]} >
+            <YAxis tick={{ fill: "white" }} tickFormatter={(tick) => yLabels[tick]} domain={[0, 1]} allowDecimals={false}>
               <Label
                 value="Likely Bloom"
                 angle={-90}

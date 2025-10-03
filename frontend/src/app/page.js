@@ -112,7 +112,7 @@ export default async function Home() {
             const format = (date) =>
               date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
-            return `Sun, ${format(firstWeekStart)}th – Sat, ${format(finalWeekEnd)}th`;
+            return `Sun, ${format(firstWeekStart)} – Sat, ${format(finalWeekEnd)}`;
           })()
         }
       </h2>
