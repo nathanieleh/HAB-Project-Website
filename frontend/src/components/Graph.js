@@ -20,54 +20,43 @@ export default function Graph({ forecasts, className }) {
   forecasts = forecasts.map((item, index) => ({
     week: "Week " + (index + 1),
     value: item.Likeliness === "Likely" ? 1 : 0,
+    confidence: item.CI.toFixed(2),
   }))
 
   const yLabels = ["Unlikely", "Likely"];
+
+  const getColor = (forecast) => (forecast ? "bg-green-500" : "bg-red-500");
 
   return (
     <div className={className}>
       <div
         className="w-[80vw] md:w-[50vw] p-6 rounded-xl bg-primary/40"
       >
-        <h3 className="text-white text-lg mb-4">3 Weeks Forecast</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={forecasts} margin={{ top: 20, right: 40, bottom: 40, left: 20 }}>
-            <CartesianGrid stroke="rgba(255,255,255,0.2)" />
-            <XAxis dataKey="week" tick={{ fill: "white" }}>
-              <Label
-                value="Week Count"
-                position="insideBottom"
-                offset={-30}
-                style={{ fill: "white", textAnchor: "middle" }}
-              />
-            </XAxis>
-            <YAxis tick={{ fill: "white" }} tickFormatter={(tick) => yLabels[tick]} domain={[0, 1]} allowDecimals={false}>
-              <Label
-                value="Likely Bloom"
-                angle={-90}
-                position="insideLeft"
-                offset={-10}
-                style={{ fill: "white", textAnchor: "middle" }}
-              />
-            </YAxis>
-            <Tooltip
-              contentStyle={{ backgroundColor: "#1e3a47", borderColor: "var(--color-secondary)" }}
-              labelStyle={{ color: "white" }}
-              itemStyle={{ color: "var(--color-secondary)" }}
-            />
-            <Line
-              type="monotone"
-              dataKey="value"
-              stroke="var(--color-secondary)"
-              strokeWidth={2}
-              dot={{
-                r: 5,
-                stroke: "var(--color-secondary)",
-                strokeWidth: 2,
-                fill: "#ffffff",
-              }}
-            />
-          </LineChart>
+        <h3 className="text-white text-lg">3 Weeks Forecast Confidence</h3>
+        <ResponsiveContainer width="100%" height={226}>
+          <div className="flex flex-row gap-6 items-start justify-center">
+            {forecasts.map((d, i) => (
+              <div key={i} className="flex flex-col items-center h-60">
+                {/* Confidence Bar */}
+                <div className="flex flex-col-reverse h-full w-20 bg-gray-500 overflow-hidden rounded-full">
+                  <div
+                    className={`${getColor(d.value)} w-full`}
+                    style={{ height: `${d.confidence}%` }}
+                  ></div>
+                </div>
+
+                {/* Emoji + Week */}
+                <div className="text-sm mb-1 text-white">
+                  {d.value ? "✅" : "❌"} {d.week}
+                </div>
+
+                {/* Confidence % */}
+                <div className="text-xs mt-1 text-white">
+                  {d.confidence}%
+                </div>
+              </div>
+            ))}
+          </div>
         </ResponsiveContainer>
       </div>
     </div>
