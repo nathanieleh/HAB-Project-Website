@@ -1,13 +1,6 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import {
-    Bar,
-    XAxis,
-    BarChart,
-    LabelList,
-    ResponsiveContainer,
-  } from "recharts";
 
 /**
  * Droplet Icon
@@ -139,7 +132,6 @@ export default function Today({forecasts, className}) {
     // Set to the end of the week (Saturday)
     endOfWeek.setDate(beginningOfWeek.getDate() + 6);
 
-    let dayOptions = { weekday: 'long' };
     return (
         <div className={className}>
             <div className="relative grid w-[80vw] md:w-[40vw] justify-center bg-primary/40 text-white rounded-xl">
@@ -158,7 +150,7 @@ export default function Today({forecasts, className}) {
                         <div className="relative">
                             <Droplet predValue={dropletValue} className="w-[100px] h-[100px]" />
                             {/* Tooltip for confidence */}
-                            <div className="absolute top-0 right-0 group">
+                            <div className="absolute top-0 right-0 group z-10">
                                 <span className="text-sm bg-gray-200 text-gray-700 rounded-full px-1">i</span>
                                 <div className="absolute left-1 top-0 hidden text-nowrap translate-x-1/32 px-1 rounded-md bg-gray-800 text-xs text-white group-hover:block">
                                     Model Confidence: {confidenceValue}% | Likeliness calculated on every Tuesday of the week.

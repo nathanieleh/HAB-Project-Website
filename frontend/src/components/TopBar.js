@@ -18,16 +18,37 @@ export default function TopBar({ forecasts, className }) {
           }
         }
       }, []);
+    
+    const today = new Date();
+    const beginningOfWeek = new Date(today);
+    const endOfWeek = new Date(today);
+
+    // Set to the beginning of the week (Sunday)
+    beginningOfWeek.setDate(today.getDate() - today.getDay());
+
+    // Set to the end of the week (Saturday)
+    endOfWeek.setDate(beginningOfWeek.getDate() + 6);
+
+    const tempWeekDate = new Date(beginningOfWeek);
 
     return (
         <div className={className}>
             <div className="flex items-center justify-between w-[80vw] md:w-[90vw] py-4 md:p-4 bg-primary/40 text-white rounded-xl divide-x overflow-auto">
-                {forecasts.map((item, index) => (
-                    <div key={index} data-week={index} className="flex-1 px-4 text-center">
-                        <div className="text-sm font-bold">{`Week ${index + 1}`}</div>
-                        <div className="text-lg">{item.Likeliness}</div>
-                    </div>
-                ))}
+                {forecasts.map((item, index) => {
+                    const weekStart = new Date(beginningOfWeek);
+                    weekStart.setDate(beginningOfWeek.getDate() + index * 7);
+
+                    const weekEnd = new Date(endOfWeek);
+                    weekEnd.setDate(endOfWeek.getDate() + index * 7);
+
+                    return (
+                        <div key={index} data-day={index} className="flex-1 px-4 text-center">
+                            <p>{weekStart.toLocaleDateString()} - {weekEnd.toLocaleDateString()}</p>
+                            <div className="text-lg font-bold">{item.Likeliness}</div>
+                            <div className="text-sm">{`Week ${index + 1}`}</div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );
