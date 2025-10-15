@@ -33,7 +33,7 @@ export default function TopBar({ forecasts, className }) {
 
     return (
         <div className={className}>
-            <div className="flex items-center justify-between w-[80vw] md:w-[90vw] py-4 md:p-4 bg-primary/40 text-white rounded-xl divide-x overflow-auto">
+            <div className="flex items-center justify-between w-[95vw] lg:w-[90vw] py-4 lg:p-4 bg-primary/40 text-white rounded-xl divide-x overflow-auto">
                 {forecasts.map((item, index) => {
                     const weekStart = new Date(beginningOfWeek);
                     weekStart.setDate(beginningOfWeek.getDate() + index * 7);
@@ -43,9 +43,9 @@ export default function TopBar({ forecasts, className }) {
 
                     return (
                         <div key={index} data-day={index} className="flex-1 px-4 text-center">
-                            <p>{weekStart.toLocaleDateString()} - {weekEnd.toLocaleDateString()}</p>
-                            <div className="text-lg font-bold">{item.Likeliness}</div>
-                            <div className="text-sm">{`Week ${index + 1}`}</div>
+                            <p className="text-xs lg:text-lg">{weekStart.toLocaleDateString()} - {weekEnd.toLocaleDateString()}</p>
+                            <div className="text-sm font-bold lg:text-xl">{item.Likeliness}</div>
+                            <div className="text-xs lg:text-lg">{`Week ${index + 1}`}</div>
                         </div>
                     );
                 })}

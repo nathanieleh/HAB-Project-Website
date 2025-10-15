@@ -134,7 +134,7 @@ export default function Today({forecasts, className}) {
 
     return (
         <div className={className}>
-            <div className="relative grid w-[80vw] md:w-[40vw] justify-center bg-primary/40 text-white rounded-xl">
+            <div className="relative grid w-[95vw] lg:w-[40vw] justify-center justify-items-center bg-primary/40 text-white rounded-xl">
                 {/* Text Display */}
                 <div className="flex flex-col w-full items-center self-center p-6">
                     <div className="flex flex-col items-center mb-6">
@@ -144,18 +144,18 @@ export default function Today({forecasts, className}) {
                 </div>
 
                 {/* Likeliness and Droplet Display */}
-                <div className="w-[150px] h-[100px] md:w-[200px] md:h-[150px] self-end mb-4 mr-4">
+                <div className="w-[150px] h-[100px] lg:w-[200px] lg:h-[150px] self-center mb-4">
                     <h1 className="flex items-center justify-center">
                         <p className="text-5xl">{forecast["Likeliness"]}</p>
                         <div className="relative">
-                            <Droplet predValue={dropletValue} className="w-[100px] h-[100px]" />
+                            <Droplet predValue={dropletValue} className="w-[100px] h-[100px] ml-[-1rem] mr-[-2rem]" />
                             {/* Tooltip for confidence */}
-                            <div className="absolute top-0 right-0 group z-10">
+                            {/* <div className="absolute top-0 right-0 group z-10">
                                 <span className="text-sm bg-gray-200 text-gray-700 rounded-full px-1">i</span>
-                                <div className="absolute left-1 top-0 hidden text-nowrap translate-x-1/32 px-1 rounded-md bg-gray-800 text-xs text-white group-hover:block">
+                                <div className="absolute left-1 top-0 hidden text-wrap translate-x-1/32 px-1 rounded-md bg-gray-800 text-xs text-white group-hover:block">
                                     Model Confidence: {confidenceValue}% | Likeliness calculated on every Tuesday of the week.
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </h1>
                 </div>

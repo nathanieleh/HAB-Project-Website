@@ -76,7 +76,7 @@ export default async function Home() {
     <main className="min-h-screen h-auto bg-[url(/background.png)] bg-cover bg-no-repeat bg-fixed items-center">
       <Image
           src="/hknlogo.svg"
-          className="pl-10 pt-8"
+          className="lg:pl-10 lg:pt-8 justify-self-center lg:justify-self-start"
           alt="HKN Logo"
           width={180}
           height={50}
@@ -119,8 +119,8 @@ export default async function Home() {
       <div className="flex items-center justify-center mb-4">
         <TopBar forecasts={forecasts} className=""/>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center space-x-0 md:space-x-4 gap-y-4 md:gap-y-0">
-        <Today forecasts={forecasts} className="md:self-start"/>
+      <div className="flex flex-col lg:flex-row justify-center items-center space-x-0 lg:space-x-4 gap-y-4 lg:gap-y-0">
+        <Today forecasts={forecasts} className="lg:self-start"/>
         <Graph forecasts={forecasts} className="mb-[5vh]"/>
       </div>
 

@@ -17,19 +17,19 @@ export default function Graph({ forecasts, className }) {
 
   return (
     <div className={className}>
-      <div className="w-[80vw] md:w-[50vw] p-6 rounded-xl bg-primary/40">
+      <div className="w-[95vw] lg:w-[50vw] p-6 rounded-xl bg-primary/40">
         <h3 className="text-white text-lg text-center">3 Week Forecast Confidence</h3>
 
         {/* Chart container */}
         <div className="relative flex justify-center items-center h-90">
           {/* Baseline (0) */}
-          <div className="absolute left-1/8 right-1/8 top-1/2 h-[2px] bg-white z-10"></div>
+          <div className="absolute left-1/12 right-1/12 lg:left-1/8 lg:right-1/8 top-1/2 h-[2px] bg-white z-10"></div>
 
           {/* Bars */}
           <div className="flex flex-row justify-center gap-8 w-full">
             {forecasts.map((f, i) => (
-              <div key={i} className="flex flex-col items-center w-20">
-                <div className="relative h-64 w-16 bg-gray-700 rounded-full overflow-hidden">
+              <div key={i} className="flex flex-col items-center w-10 sm:w-20 xl:w-30">
+                <div className="relative h-64 w-16 lg:w-20 bg-gray-700 rounded-full overflow-hidden">
                   {/* Bar fill */}
                   <div
                     className={`${getColor(f.direction)} absolute left-0 right-0`}
@@ -43,18 +43,18 @@ export default function Graph({ forecasts, className }) {
 
                 {/* Labels */}
                 <div className="absolute top-[82.5%] mt-2 flex flex-col items-center">
-                  <div className="mt-2 text-white text-sm">{f.week}</div>
-                  <div className="text-lg text-white font-bold">
+                  <div className="mt-2 text-white text-xs lg:text-sm">{f.week}</div>
+                  <div className="text-sm text-white font-bold lg:text-lg">
                     {f.direction === "up" ? "Likely" : "Unlikely"}
                   </div>
-                  <div className="text-white text-xs">{(f.direction === "up" ? 1 : -1) * f.confidence}%</div>
+                  <div className="text-white text-xs lg:text-xs">{(f.direction === "up" ? 1 : -1) * f.confidence}%</div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Axis labels */}
-          <div className="absolute left-4 flex flex-col items-center text-xs text-white h-full justify-between">
+          <div className="absolute left-[-1rem] lg:left-4 flex flex-col items-center text-xs text-white h-full justify-between">
             <span>Likely</span>
             <span>100%</span>
             <span>50%</span>
@@ -63,7 +63,7 @@ export default function Graph({ forecasts, className }) {
             <span>-100%</span>
             <span>Unlikely</span>
           </div>
-          <div className="absolute right-4 flex flex-col items-center text-xs text-white h-full justify-between">
+          <div className="absolute right-[-1rem] lg:right-4 flex flex-col items-center text-xs text-white h-full justify-between">
             <span>Likely</span>
             <span>100%</span>
             <span>50%</span>
