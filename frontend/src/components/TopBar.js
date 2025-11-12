@@ -17,6 +17,7 @@ export default function TopBar({ forecasts, className }) {
             element.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
           }
         }
+        alert("⚠️ Warning: This site currently serves outdated data. We are working to resolve this issue. ⚠️");
       }, []);
     
     const today = new Date();
