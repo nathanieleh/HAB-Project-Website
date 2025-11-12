@@ -127,6 +127,7 @@ export default async function Home() {
 
       <div className = "flex flex-col justify-center items-center">
         <h1 className="text-2xl text-center mt-[5vh]  text-secondary font-bold " >About</h1>
+        <p className="text-center text-white opacity-80 mt-[5vh] max-w-2xl leading-loose">Thank you to coollab for providing us with live data to keep the model running. Here is a link to their website if you wish to learn more about their initiative: <a href="https://coollab.ucsd.edu/" className="text-blue-500" target="_blank" rel="noopener noreferrer">https://coollab.ucsd.edu</a></p>
         <p className="text-center text-white opacity-80 mt-[5vh] mb-[5vh] max-w-2xl leading-loose">
           This project is a web application that provides a 3 week forecast of bioluminescence levels at Scripps Pier, La Jolla. The forecasts are based on data collected from various sources and are displayed in an easy-to-read format.
           The application features a top bar that shows the forecast for each week, a focused view of this week's forecast, and a graph that visualizes the data over the 3 weeks. The goal of this project is to help users plan their visits to Scripps Pier based on the bioluminescence levels.
